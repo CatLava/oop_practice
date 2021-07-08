@@ -2,14 +2,26 @@
 # We want to bring the classes into the namespace here
 
 import hr
+import employees
+import productivity
 
-salary_employee = hr.SalaryEmployee(1, "John Smith", 1500)
-hourly_employee = hr.HourlyEmployee(2, "John Doe", 40, 20)
-commission_employee = hr.CommissionEmployee(3, " John Foo", 1000, 250)
+# Using further inherited classes here for representation
+# This is part of the class explosion problem
+manager = employees.Manager(1, "John Smith", 1500)
+secretary = employees.Secretary(2, "John Doe", 500)
+sales_guy = employees.SalesPerson(3, " John Foo", 1000, 250)
+factory_worker = employees.FactoryWorker(4, "Pete Foo", 40, 25)
+
+
+employees = [
+    manager,
+    secretary,
+    sales_guy,
+    factory_worker
+]
+
+productivity_system = productivity.ProductivitySystem()
+productivity_system.track(employees, 40)
 
 payroll_system = hr.PayrollSystem()
-payroll_system.calculate_payroll([
-    salary_employee,
-    hourly_employee,
-    commission_employee
-])
+payroll_system.calculate_payroll(employees)
