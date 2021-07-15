@@ -61,3 +61,14 @@ class FactoryWorker(HourlyEmployee):
     # Will not use an init method
     def work(self, hours):
         print(f'{self.name} constructs widgets for {hours} hours.')
+
+class TemporarySecretary(Secretary, HourlyEmployee):
+    # multiple inheritance example, receive from other classes
+    # being able to add this to certain scenarios
+    # Think method resolution in order when working with Python
+    # Below will bypass the MRO
+    def __init__(self, id, name, hours_worked, hour_rate):
+        HourlyEmployee.__init__(self, id, name, hours_worked, hour_rate)
+
+    def calculate_payroll(self):
+        return HourlyEmployee.calculate_payroll(self)
