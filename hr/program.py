@@ -4,11 +4,25 @@
 import hr
 import employees
 import productivity
+import contacts
 
 # Using further inherited classes here for representation
 # This is part of the class explosion problem
 manager = employees.Manager(1, "John Smith", 1500)
+manager.address = contacts.Address(
+    '123 easy st',
+    'Portland',
+    'Maine',
+    '45051'
+)
 secretary = employees.Secretary(2, "John Doe", 500)
+secretary.address = contacts.Address(
+    '456 other st',
+    'Omaha',
+    'Nebraska',
+    '45051'
+)
+
 sales_guy = employees.SalesPerson(3, " John Foo", 1000, 250)
 factory_worker = employees.FactoryWorker(4, "Pete Foo", 40, 25)
 # This is double inheritance class

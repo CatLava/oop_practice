@@ -1,5 +1,25 @@
 # This will perform a function on this
 class ProductivitySystem:
+    def __init__(self):
+        # Underscore is meant to keep it hidden
+        # A method inside of this class will use it
+        # More control over how data is accessed
+        self._roles = {
+            'manager' : ManagerRole,
+            'secretary' : SecretaryRole,
+            'sales' : SalesRole,
+            'factory' : FactoryRole
+        }
+
+    def get_role(self, role_id):
+        # Dictionary method to obtain the role ID
+        role_type = self._roles.get(role_id)
+
+        if not role_type:
+            raise ValueError("invalid role_id")
+        # This will instantiate it into an object
+        return role_type()
+
     def track(self, employees, hours):
         print('Tracking Employee Productivity')
         print('=======================')

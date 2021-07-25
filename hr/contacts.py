@@ -18,5 +18,3 @@ class Address:
         lines.append(f'{self.city}, {self.state} {self.zipcode}')
         return '\n'.join(lines)
 
-address = Address("123 easy st.", "Omaha", "NE", 12305)
-print(address)
