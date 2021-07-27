@@ -3,6 +3,7 @@
 from contacts import AddressBook
 from hr import PayrollSystem
 from productivity import ProductivitySystem
+from representations import AsDictionaryMixin
 
 
 
@@ -10,6 +11,7 @@ from productivity import ProductivitySystem
 # List of dictionarys,
 class EmployeeDatabase:
     def __init__(self):
+        # Example of composition
         self._employees = [
             {
             'id': 1,
@@ -21,21 +23,21 @@ class EmployeeDatabase:
                 'id': 2,
                 'name': 'Jane Doe',
                 'role': 'secretary'
-            }
+            },
 
 
             {
                 'id': 3,
                 'name': 'John Cena',
                 'role': 'factory'
-            }
+            },
 
 
             {
                 'id': 4,
                 'name': 'Bruce Willis',
                 'role': 'sales'
-            }
+            },
 
 
             {
@@ -47,7 +49,7 @@ class EmployeeDatabase:
         ]
 
         self.productivity = ProductivitySystem()
-        self.address = AddressBook()
+        self.employee_address = AddressBook()
         self.payroll = PayrollSystem()
 
     def employees(self):
@@ -57,16 +59,33 @@ class EmployeeDatabase:
 
     # _ means method should only be called in this class
     def _create_employee(self, id, name, role):
+        address = self.employee_address.get_address(id)
+        employee_role = self.productivity.get_role(role)
+        employee_pay = self.payroll.get_policy(id)
+        return Employee(id, name, address, employee_role, employee_pay)
 
 
 
 
 # Going to refactor this code
 # using the dict ID mappings as a psuedo dastabase
-class Employee:
-    def __init__(self, id, name):
+class Employee(AsDictionaryMixin):
+    def __init__(self, id, name, address, role, payroll):
         self.id = id
         self.name = name
-        self.address = None
+        self.address = address
+        # Dict will filter out because of _ private indicator
+        self._role = role
+        self._payroll = payroll
+
+    def work(self, hours):
+        duties = self.role.work(hours)
+        print(f'{self.id} - {self.name}')
+        print(f'- {duties}')
+        self.payroll.track_work(hours)
+
+    def calculate_payroll(self):
+        return self.payroll.calculate_payroll()
+
 
 

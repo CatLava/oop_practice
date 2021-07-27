@@ -2,6 +2,8 @@
 # We can't store it as string in case we want to pull info
 # Between streets, states, cities, etc
 
+from representations import AsDictionaryMixin
+
 # will also create an address mapping class
 # Map ids to address
 
@@ -21,7 +23,7 @@ class AddressBook:
             raise ValueError('Invalid Address id')
         return address
 
-class Address:
+class Address(AsDictionaryMixin):
     def __init__(self, street, city, state, zipcode, street2=''):
         self.street = street
         self.street2 = street2

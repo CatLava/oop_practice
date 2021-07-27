@@ -1,44 +1,32 @@
 # This is where the hr.py will run
 # We want to bring the classes into the namespace here
 
-import hr
-import employees
-import productivity
-import contacts
+# This is v2 reformatting this entire file
+#
+# Policy based design
+# Modules are in charge of various areas to perform a function
+from hr import PayrollSystem, HourlyPolicy
+from productivity import ProductivitySystem
+from employees import EmployeeDatabase
+import json
+'''
+productivity_system = ProductivitySystem()
+payroll_system = PayrollSystem()
+employee_database = EmployeeDatabase()
 
-# Using further inherited classes here for representation
-# This is part of the class explosion problem
-manager = employees.Manager(1, "John Smith", 1500)
-manager.address = contacts.Address(
-    '123 easy st',
-    'Portland',
-    'Maine',
-    '45051'
-)
-secretary = employees.Secretary(2, "John Doe", 500)
-secretary.address = contacts.Address(
-    '456 other st',
-    'Omaha',
-    'Nebraska',
-    '45051'
-)
+employees = employee_database.employees()
 
-sales_guy = employees.SalesPerson(3, " John Foo", 1000, 250)
-factory_worker = employees.FactoryWorker(4, "Pete Foo", 40, 25)
-# This is double inheritance class
-temp_secratary = employees.TemporarySecretary(5, "Susan", 40, 20)
+# Modifying the employee
+manager = employees[0]
+manager.payroll = HourlyPolicy(55)
+# Calling all of these actions
 
-
-employees = [
-    manager,
-    secretary,
-    sales_guy,
-    factory_worker,
-    temp_secratary
-]
-
-productivity_system = productivity.ProductivitySystem()
 productivity_system.track(employees, 40)
-
-payroll_system = hr.PayrollSystem()
 payroll_system.calculate_payroll(employees)
+'''
+
+def print_dict(d):
+    print(json.dumps(d, indent=2))
+
+for employee in EmployeeDatabase().employees():
+    print_dict(employee.to_dict())

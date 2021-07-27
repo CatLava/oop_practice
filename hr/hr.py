@@ -13,7 +13,7 @@ class PayrollSystem:
     # Need a class associated with this
     def get_policy(self, policy_id):
         # Checking the policy
-        policy = self.policy_id.get(policy_id)
+        policy = self._employee_policies.get(policy_id)
         if not policy:
             raise ValueError("Invalid policy ID")
         return policy
@@ -35,25 +35,25 @@ class PayrollPolicy:
     def __init__(self):
         self.hours_worked = 0
 
-    def track_hour(self, hours):
+    def track_work(self, hours):
         self.hours_worked += hours
 
 
 class SalaryPolicy(PayrollPolicy):
     def __init__(self, weekly_salary):
+        super().__init__()
         self.weekly_salary = weekly_salary
 
     def calculate_payroll(self):
         return self.weekly_salary
 
 class HourlyPolicy(PayrollPolicy):
-    def __init__(self, hours_worked, hour_rate):
-        self.hours_worked = hours_worked
+    def __init__(self,  hour_rate):
+        super().__init__()
         self.hour_rate = hour_rate
 
     def calculate_payroll(self):
         return self.hours_worked * self.hour_rate
-
 
 
 class CommissionPolicy(SalaryPolicy):
