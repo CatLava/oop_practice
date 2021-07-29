@@ -7,7 +7,7 @@ from representations import AsDictionaryMixin
 # will also create an address mapping class
 # Map ids to address
 
-class AddressBook:
+class _AddressBook:
     def __init__(self):
         self._employee_address = {
             1: Address('23 Maple St', 'Kansas City', 'Missouri', '87604'),
@@ -39,3 +39,9 @@ class Address(AsDictionaryMixin):
         lines.append(f'{self.city}, {self.state} {self.zipcode}')
         return '\n'.join(lines)
 
+_address_book = _AddressBook()
+
+# Form of abstraction to take away the way of getting with this
+# only expose these modules rather than through the class
+def get_address(employee_id):
+    return _address_book.get_address(employee_id)

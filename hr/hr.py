@@ -1,5 +1,6 @@
 
-class PayrollSystem:
+# Make this a singleton to be only called once
+class _PayrollSystem:
     def __init__(self):
         # Policy already set with parameters
         # This is storing the objects, value returned
@@ -70,3 +71,11 @@ class CommissionPolicy(SalaryPolicy):
     def calculate_payroll(self):
         fixed = super().calculate_payroll()
         return fixed + self.commission()
+
+_payroll_system = _PayrollSystem()
+
+def get_policy(policy_id):
+    return _payroll_system.get_policy(policy_id)
+
+def calculate_hours(employees):
+    _payroll_system.calculate_payroll(employees)

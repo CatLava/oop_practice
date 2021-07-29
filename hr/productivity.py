@@ -1,5 +1,7 @@
 # This will perform a function on this
-class ProductivitySystem:
+# Make this class a singleton, only instantiated once
+# This class is internal to the module
+class _ProductivitySystem:
     def __init__(self):
         # Underscore is meant to keep it hidden
         # A method inside of this class will use it
@@ -47,3 +49,11 @@ class FactoryRole:
     # Will not use an init method
     def work(self, hours):
         print(f'constructs widgets for {hours} hours.')
+
+_productivity_system = _ProductivitySystem()
+
+def get_role(role_id):
+    return _productivity_system.get_role(role_id)
+
+def track(employees, hours):
+    _productivity_system.track(employees, hours)
