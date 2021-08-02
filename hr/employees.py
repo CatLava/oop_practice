@@ -9,13 +9,13 @@ from representations import AsDictionaryMixin
 
 # Act as a database, not an actual database
 # List of dictionarys,
-class _EmployeeDatabase:
+class _Employee_database:
     def __init__(self):
         # Example of composition
         self._employees = {
             1: {
-            'name': 'John Doe',
-            'role': 'manager'
+                'name': 'John Doe',
+                'role': 'manager'
             },
 
             2: {
@@ -43,9 +43,6 @@ class _EmployeeDatabase:
 
         }
 
-        self.productivity = ProductivitySystem()
-        self.employee_address = AddressBook()
-        self.payroll = PayrollSystem()
 
     def employees(self):
         # This returns a new employee data set in one liner
@@ -68,20 +65,26 @@ class _EmployeeDatabase:
 class Employee(AsDictionaryMixin):
     def __init__(self, id):
         self.id = id
-        info = _EmployeeDatabase.get_employee_info(self.id)
+        info = employee_database.get_employee_info(self.id)
         self.name = info.get('name')
         self._role = get_role(info.get('role'))
         self.address = get_address(self.id)
-        self._payroll = get_policy(info.get(self.id))
+        self._payroll = get_policy(self.id)
 
     def work(self, hours):
-        duties = self.role.work(hours)
+        duties = self._role.work(hours)
         print(f'{self.id} - {self.name}')
         print(f'- {duties}')
-        self.payroll.track_work(hours)
+        self._payroll.track_work(hours)
 
     def calculate_payroll(self):
-        return self.payroll.calculate_payroll()
+        return self._payroll.calculate_payroll()
+
+    def apply_payroll_policy(self, new_policy):
+        new_policy.apply_to_policy(self._payroll)
+        self._payroll = new_policy
 
 
 
+
+employee_database = _Employee_database()

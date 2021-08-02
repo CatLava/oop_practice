@@ -5,28 +5,20 @@
 #
 # Policy based design
 # Modules are in charge of various areas to perform a function
-from hr import PayrollSystem, HourlyPolicy
-from productivity import ProductivitySystem
-from employees import EmployeeDatabase
+
 import json
-'''
-productivity_system = ProductivitySystem()
-payroll_system = PayrollSystem()
-employee_database = EmployeeDatabase()
-
-employees = employee_database.employees()
-
-# Modifying the employee
-manager = employees[0]
-manager.payroll = HourlyPolicy(55)
-# Calling all of these actions
-
-productivity_system.track(employees, 40)
-payroll_system.calculate_payroll(employees)
-'''
+from hr import calculate_hours, LTDPolicy
+from productivity import track
+from employees import employee_database, Employee
 
 def print_dict(d):
     print(json.dumps(d, indent=2))
 
-for employee in EmployeeDatabase().employees():
-    print_dict(employee.to_dict())
+employees = employee_database.employees()
+
+sales_employee = employees[2]
+ltd_policy = LTDPolicy()
+sales_employee.apply_payroll_policy(ltd_policy)
+
+track(employees, 40)
+calculate_hours(employees)

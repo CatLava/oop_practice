@@ -32,6 +32,31 @@ class _PayrollSystem:
 
 # Base class to various other policies
 # All other policies can derive from this
+
+# Long term disability policy
+class LTDPolicy:
+    def __init__(self):
+        self._base_policy = None
+
+    def _check_base_policy(self):
+        if not self._base_policy:
+            raise RuntimeError('Base policy missing')
+
+    def track_work(self, hours):
+        self._check_base_policy()
+        return self._check_base_policy()
+
+    def calculate_payroll(self):
+        self._check_base_policy()
+        base_salary = self._base_policy.calculate_payroll()
+        return base_salary * .6
+
+    def apply_to_policy(self, base_policy):
+        self._base_policy = base_policy
+
+
+
+
 class PayrollPolicy:
     def __init__(self):
         self.hours_worked = 0
